@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>exp2 data structure vector</h3>
+    <pre>
+
+v1 <- c(10, 20, 30, 40)
+print("Vector using c() function:")
+print(v1)
+
+v2 <- seq(5, 20, by = 5)
+print("Vector using seq() function:")
+print(v2)
+
+v3 <- rep(7, times = 4)
+print("Vector using rep() function:")
+print(v3)
+
+v4 <- 1:5
+print("Vector using colon operator:")
+print(v4)
+
+
+print("Addition of v1 and v2:")
+print(v1 + v2)
+
+print("Subtraction of v1 and v2:")
+print(v1 - v2)
+
+print("Multiplication of v1 by 2:")
+print(v1 * 2)
+
+print("Division of v2 by 5:")
+print(v2 / 5)
+
+print("Square root of v1:")
+print(sqrt(v1))
+
+print("Sum of elements in v1:")
+print(sum(v1))
+
+print("Mean of elements in v2:")
+print(mean(v2))
+
+createArray <- function() {
+  values <- seq(42, by = 2, length.out = 12) 
+  arr <- array(values, dim = c(4, 3))
+  return(arr)
+}
+
+print("4x3 Array of Even Integers Greater than 40:")
+my_array <- createArray()
+print(my_array)
+
+print("Maximum value in v1:")
+print(max(v1))
+
+print("Minimum value in v2:")
+print(min(v2))
+
+
+mat <- matrix(1:9, nrow = 3)
+print("Matrix Example:")
+print(mat)
+
+print("Row sums of matrix:")
+print(rowSums(mat))
+
+print("Column means of matrix:")
+print(colMeans(mat))
+
+my_list <- list(Name = "R Language", Version = 4.3, Vector = v1)
+print("List Example:")
+print(my_list)
+
+
+    </para>
+
+
+
+    <h3>exp3 import export csv excel</h3>
+
+    <pre>
+install.packages("readxl")
+install.packages("writexl")
+
+library(readxl)
+library(writexl)
+
+student_data <- data.frame(
+  Name = c("Amit", "Riya", "Karan", "Sneha", "Tina"),
+  Age = c(21, 20, 22, 19, 23),
+  Marks = c(85, 90, 78, 88, 95)
+)
+
+print("Original Data Frame:")
+print(student_data)
+
+write.csv(student_data, "student_data.csv", row.names = FALSE)
+print("Data exported to 'student_data.csv' successfully!")
+
+imported_csv <- read.csv("student_data.csv")
+print("Imported Data from CSV:")
+print(imported_csv)
+
+print("Average Marks of Students:")
+print(mean(imported_csv$Marks))
+
+print("Maximum Marks:")
+print(max(imported_csv$Marks))
+
+print("Minimum Marks:")
+print(min(imported_csv$Marks))
+
+print("Students Scoring Above 85:")
+print(subset(imported_csv, Marks > 85))
+
+write_xlsx(student_data, "student_data.xlsx")
+print("Data exported to 'student_data.xlsx' successfully!")
+
+imported_excel <- read_excel("student_data.xlsx")
+print("Imported Data from Excel:")
+print(imported_excel)
+
+print("Sorted Data (by Marks):")
+sorted_data <- imported_excel[order(imported_excel$Marks, decreasing = TRUE), ]
+print(sorted_data)
+
+print("Add a new column: Result (Pass/Fail)")
+imported_excel$Result <- ifelse(imported_excel$Marks >= 80, "Pass", "Fail")
+print(imported_excel)
+
+    </pre>
+
+
+    <h3>exp4 simple graph plot()</h3>
+
+    <pre>
+x <- c(1, 2, 3, 4, 5)
+y <- c(10, 20, 15, 25, 30)
+
+plot(x, y, type = "o", col = "blue", main = "Simple Line Plot", xlab = "X Values", ylab = "Y Values")
+points(x, y, pch = 19, col = "red")
+text(x, y, labels = y, pos = 3, col = "darkgreen")
+grid()
+title("Vector Plot Example")
+
+library(readxl)
+data <- read_excel("student_data.xlsx")
+
+print("Imported Data:")
+print(data)
+
+plot(data$Age, data$Marks, type = "p", col = "purple", main = "Marks vs Age (Student Data)", xlab = "Age of Students", ylab = "Marks Obtained", pch = 19)
+lines(data$Age, data$Marks, col = "orange", lty = 2)
+grid()
+
+barplot(data$Marks, names.arg = data$Name, col = "skyblue", main = "Bar Chart of Student Marks", xlab = "Student Name", ylab = "Marks")
+
+pie(data$Marks, labels = data$Name, main = "Pie Chart of Student Marks", col = rainbow(length(data$Marks)))
+   
+    </pre>
+
+    <h3>exp5 linear and multiple linear Regression</h3>
+    <pre>
+data <- data.frame(
+  Experience = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+  Salary = c(15, 18, 22, 24, 28, 31, 35, 40, 45, 50)
+)
+
+print(data)
+model <- lm(Salary ~ Experience, data = data)
+summary(model)
+pred <- predict(model, data.frame(Experience = 6))
+cat("Predicted Salary for 6 years experience:", pred, "\n")
+
+plot(data$Experience, data$Salary,
+     col = "blue", pch = 19,
+     xlab = "Experience (Years)",
+     ylab = "Salary (in Thousands)",
+     main = "Linear Regression: Experience vs Salary")
+abline(model, col = "red", lwd = 2)
+
+
+
+data <- data.frame(
+  Experience = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+  Age = c(22, 23, 25, 26, 28, 30, 32, 35, 37, 40),
+  Salary = c(15, 18, 22, 25, 28, 32, 36, 42, 46, 52)
+)
+
+print(data)
+model2 <- lm(Salary ~ Experience + Age, data = data)
+summary(model2)
+pred2 <- predict(model2, data.frame(Experience = 6, Age = 30))
+cat("Predicted Salary for Experience=6 and Age=30:", pred2, "\n")
+
+    </pre>
+
+
+    <h3>exp6 s3 class</h3>
+    <pre>
+rm(list = ls())
+
+makePersonS3 <- function(name, age) {
+  obj <- list(name = name, age = age)
+  class(obj) <- "PersonS3"
+  return(obj)
+}
+
+print.PersonS3 <- function(x) {
+  cat("Person Details:\n")
+  cat("Name:", x$name, "\n")
+  cat("Age :", x$age, "\n")
+}
+
+greet <- function(x) UseMethod("greet")
+
+greet.PersonS3 <- function(x) {
+  cat("Hello", x$name, "! You are", x$age, "years old.\n")
+}
+
+p1 <- makePersonS3("Rohit", 38)
+
+print(p1)
+
+greet(p1)
+
+    </pre>
+
+
+    <h3>exp7 find row coloum joins inner,outer, left, right</h3>
+    <pre>
+m <- matrix(c(5, 2, 8, 1, 9, 4, 7, 3, 6), nrow = 3, byrow = TRUE)
+print(m)
+
+max_pos <- which(m == max(m), arr.ind = TRUE)
+min_pos <- which(m == min(m), arr.ind = TRUE)
+
+cat("Maximum Value:", max(m), "at Row:", max_pos[1], "Column:", max_pos[2], "\n")
+cat("Minimum Value:", min(m), "at Row:", min_pos[1], "Column:", min_pos[2], "\n")
+
+df1 <- data.frame(ID = c(1, 2, 3, 4), Name = c("A", "B", "C", "D"))
+df2 <- data.frame(ID = c(3, 4, 5, 6), Age = c(23, 25, 28, 30))
+
+inner_join <- merge(df1, df2, by = "ID")
+left_join <- merge(df1, df2, by = "ID", all.x = TRUE)
+right_join <- merge(df1, df2, by = "ID", all.y = TRUE)
+outer_join <- merge(df1, df2, by = "ID", all = TRUE)
+
+cat("\nInner Join:\n"); print(inner_join)
+cat("\nLeft Join:\n"); print(left_join)
+cat("\nRight Join:\n"); print(right_join)
+cat("\nOuter Join:\n"); print(outer_join)
+
+    </pre>
+
+    <h3>exp8 generate multiplication table</h3>
+    <pre>
+num <- as.integer(readline(prompt = "Enter a number: "))
+cat("Multiplication Table of", num, "\n")
+for (i in 1:10) {
+  cat(num, "x", i, "=", num * i, "\n")
+}
+
+num1 <- as.numeric(readline(prompt = "Enter first number: "))
+num2 <- as.numeric(readline(prompt = "Enter second number: "))
+op <- readline(prompt = "Enter operation (+, -, *, /): ")
+
+result <- switch(op,
+                 "+" = num1 + num2,
+                 "-" = num1 - num2,
+                 "*" = num1 * num2,
+                 "/" = ifelse(num2 != 0, num1 / num2, "Division by zero error"),
+                 "Invalid operation")
+cat("Result:", result, "\n")
+
+data <- data.frame(
+  ID = 1:5,
+  Name = c("A", "B", "C", "D", "E"),
+  Score = c(80, 75, 90, 85, 70)
+)
+
+write.csv(data, "data_output.csv", row.names = FALSE)
+data_imported <- read.csv("data_output.csv")
+cat("\nImported CSV Data:\n")
+print(data_imported)
+
+write.table(data, "data_output.txt", row.names = FALSE)
+data_txt <- read.table("data_output.txt", header = TRUE)
+cat("\nImported Text Data:\n")
+print(data_txt)
+
+    </pre>
+
+    <h3>exp9 pie, bar, Histogram</h3>
+    <pre>
+data <- mtcars
+
+cyl_counts <- table(data$cyl)
+gear_counts <- table(data$gear)
+
+par(mfrow = c(1,3))
+
+pie(cyl_counts, main = "Pie Chart of Cylinders", col = rainbow(length(cyl_counts)))
+
+barplot(gear_counts, main = "Bar Chart of Gears", col = "lightblue", xlab = "Gears", ylab = "Count")
+
+hist(data$mpg, main = "Histogram of MPG", xlab = "Miles Per Gallon", col = "lightgreen", border = "black")
+
+par(mfrow = c(1,1))
+
+    </pre>
+
+    <h3>exp10 s4 class</h3>
+    <pre>
+
+setClass(
+  "Person",
+  slots = list(
+    name = "character",
+    age = "numeric",
+    gender = "character"
+  )
+)
+
+p1 <- new("Person", name = "Virat", age = 36, gender = "M")
+p2 <- new("Person", name = "Rohit", age = 38, gender = "M")
+
+p1@name
+p2@age
+
+setGeneric(
+  name = "greet",
+  def = function(object) {
+    standardGeneric("greet")
+  }
+)
+
+setMethod(
+  f = "greet",
+  signature = "Person",
+  definition = function(object) {
+    cat("Hello,", object@name, "! You are", object@age, "years old and gender is", object@gender, "\n")
+  }
+)
+
+greet(p1)
+greet(p2)
+
+p1@age <- 37
+greet(p1)
+
+    </pre>
+    
+    <h3>exp11 find the length of first two components in list to convert matrix into list</h3>
+    <pre>
+mylist <- list(
+  numbers = c(10, 20, 30, 40),
+  letters = c("A", "B", "C"),
+  matrix_data = matrix(1:9, nrow = 3)
+)
+
+len1 <- length(mylist[[1]])
+len2 <- length(mylist[[2]])
+cat("Length of first component:", len1, "\n")
+cat("Length of second component:", len2, "\n")
+
+mat <- matrix(1:12, nrow = 3, ncol = 4)
+mat_list <- as.list(mat)
+cat("Matrix converted into list:\n")
+print(mat_list)
+
+    </pre>
+
+    <h3>exp12 connect to the database</h3>
+    <pre>
+install.packages("DBI")
+install.packages("RMySQL")
+install.packages("readxl")
+install.packages("writexl")
+
+library(DBI)
+library(RMySQL)
+library(readxl)
+library(writexl)
+
+data <- data.frame(ID = 1:5, Name = c("A","B","C","D","E"), Score = c(80,75,90,85,70))
+
+write.csv(data, "students.csv", row.names = FALSE)
+write_xlsx(data, "students.xlsx")
+
+data_csv <- read.csv("students.csv")
+data_excel <- read_excel("students.xlsx")
+
+cat("\nImported CSV Data:\n")
+print(data_csv)
+cat("\nImported Excel Data:\n")
+print(data_excel)
+
+
+    </pre>
+</body>
+</html>
